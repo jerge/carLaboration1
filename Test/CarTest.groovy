@@ -1,5 +1,8 @@
 package exercises
 
+import exercises.models.Saab95
+import exercises.models.Volvo240
+
 import java.awt.*
 import org.testng.annotations.Test
 
@@ -21,6 +24,12 @@ class CarTest extends GroovyTestCase {
     void testGetEnginePower() {
         Car c = new Saab95()
         System.out.println(c.getEnginePower() == 125)
+    }
+
+    @Test
+    void testGetModelName() {
+        Car c = new Saab95()
+        System.out.println(c.getModelName() == "Saab95")
     }
 
     @Test
@@ -62,26 +71,26 @@ class CarTest extends GroovyTestCase {
     void testTurnLeft() {
         Car c = new Volvo240()
         c.turnLeft()
-        System.out.println(c.direction == Math.PI)
+        System.out.println(c.getDirection() == Math.PI)
         c.turnLeft()
-        System.out.println(c.direction == 3*Math.PI/2)
+        System.out.println(c.getDirection() == 3*Math.PI/2)
         c.turnLeft()
         c.turnLeft()
         c.turnLeft()
-        System.out.println(c.direction == Math.PI)
+        System.out.println(c.getDirection() == Math.PI)
     }
 
     @Test
     void testTurnRight() {
         Car c = new Volvo240()
         c.turnRight()
-        System.out.println(c.direction == 0)
+        System.out.println(c.getDirection() == 0)
         c.turnRight()
-        System.out.println(c.direction == 3*Math.PI/2)
+        System.out.println(c.getDirection() == 3*Math.PI/2)
         c.turnRight()
         c.turnRight()
         c.turnRight()
-        System.out.println(c.direction == 0)
+        System.out.println(c.getDirection() == 0)
     }
 
     @Test
@@ -89,7 +98,7 @@ class CarTest extends GroovyTestCase {
         Car c = new Saab95()
         double a = c.getPosition()[0]
         double b = c.getPosition()[1]
-        c.gas(10)
+        c.gas(0.3)
         c.move()
         double x = c.getPosition()[0]
         double y = c.getPosition()[1]
@@ -100,19 +109,19 @@ class CarTest extends GroovyTestCase {
     void testSetTurboOn() {
         Car c1 = new Saab95()
         Car c2 = new Saab95()
-        c1.gas(10)
+        c1.gas(0.5)
         c2.setTurboOn()
-        c2.gas(10)
+        c2.gas(0.5)
         System.out.println(c1.currentSpeed != c2.currentSpeed)
     }
 
     void testSetTurboOff() {
         Car c1 = new Saab95()
         Car c2 = new Saab95()
-        c1.gas(10)
+        c1.gas(0.5)
         c2.setTurboOn()
         c2.setTurboOff()
-        c2.gas(10)
+        c2.gas(0.5)
         System.out.println(c1.currentSpeed == c2.currentSpeed)
     }
 
@@ -135,43 +144,47 @@ class CarTest extends GroovyTestCase {
     void testIncrementSpeed() {
         Car v = new Volvo240()
         double a1 = v.getCurrentSpeed()
-        v.incrementSpeed(10)
+        v.incrementSpeed(0.2)
         System.out.println(a1 != v.getCurrentSpeed())
 
         Car s = new Saab95()
         double b1 = s.getCurrentSpeed()
-        s.incrementSpeed(10)
+        s.incrementSpeed(0.3)
         System.out.println(b1 != s.getCurrentSpeed())
     }
 
     @Test
     void testBrake() {
         Car c = new Volvo240()
-        c.gas(2)
+        c.gas(0.5)
         double a = c.getCurrentSpeed()
-        c.brake(10)
+        c.brake(0.8)
         System.out.println(c.getCurrentSpeed() != a)
 
         Car c1 = new Saab95()
-        c1.gas(2)
+        c1.gas(0.4)
         double a1 = c1.getCurrentSpeed()
-        c1.brake(10)
+        c1.brake(0.8)
         System.out.println(c1.getCurrentSpeed() != a1)
     }
 
     @Test
     void testDecrementSpeed() {
         Car v = new Volvo240()
-        v.incrementSpeed(10)
+        v.incrementSpeed(0.6)
         double a1 = v.getCurrentSpeed()
-        v.decrementSpeed(5)
+        v.decrementSpeed(0.4)
         System.out.println(a1 != v.getCurrentSpeed())
 
+
         Car s = new Saab95()
-        s.incrementSpeed(10)
+        s.incrementSpeed(0.8)
         double b1 = s.getCurrentSpeed()
-        s.decrementSpeed(5)
+        s.decrementSpeed(0.3)
         System.out.println(b1 != s.getCurrentSpeed())
+
+
     }
+
 
 }

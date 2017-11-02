@@ -7,41 +7,41 @@ public abstract class Car implements Movable{
     /**
      * The number of doors of the car
      */
-    int nrDoors; // Number of doors on the car
+    protected int nrDoors; // Number of doors on the car
 
     /**
      * Current engine power of the car
      * Calculated with an arbitrary number
      */
-    double enginePower; // Engine power of the car
+    protected double enginePower; // Engine power of the car
 
     /**
      * Current speed of the car
      * Calculated with an arbitrary number
      */
-    double currentSpeed; // The current speed of the car
+    protected double currentSpeed; // The current speed of the car
 
     /**
      * The car's current color
      */
-    Color color; // Color of the car
+    protected Color color; // Color of the car
 
     /**
      * The car's model name
      */
-    String modelName;
+    protected String modelName;
 
     /**
      * The position of the car in the universe
      * <i>position</i> = [X,Y]
      */
-    double[] position;
+    private double[] position = new double[]{0,0};
 
     /**
      * The direction the car is facing, in radians
      * The direction is calculated according to the unit circle
      */
-    double direction;  // Radians -> according to unit circle
+    private double direction = Math.PI/2;  // Radians -> according to unit circle
 
     /**
      * @return the number of doors of the vehicle
@@ -57,16 +57,22 @@ public abstract class Car implements Movable{
         return enginePower;
     }
 
+    public String getModelName() {
+        return modelName;
+    }
+
     /**
      * @return current speed in arbitrary form
      */
-    double getCurrentSpeed(){
+    public double getCurrentSpeed(){
         return currentSpeed;
     }
 
-    double[] getPosition(){
+    public double[] getPosition(){
         return position;
     }
+
+    public double getDirection() { return direction; }
 
     /**
      * @return color of the car
@@ -85,14 +91,14 @@ public abstract class Car implements Movable{
     /**
      * Sets the current speed to 0.1
      */
-    void startEngine(){
+    public void startEngine(){
         currentSpeed = 0.1;
     }
 
     /**
      * Sets the current speed to 0
      */
-    void stopEngine(){
+    public void stopEngine(){
         currentSpeed = 0;
     }
 
@@ -110,7 +116,6 @@ public abstract class Car implements Movable{
      */
     @Override
     public void turnRight() {
-
         direction -= Math.PI/2;
         direction = (direction + Math.PI*2) % (Math.PI*2);
     }
@@ -125,8 +130,17 @@ public abstract class Car implements Movable{
         position[1] += Math.sin(direction) * currentSpeed;
     }
 
-    abstract void incrementSpeed(double amount);
-    abstract void decrementSpeed(double amount);
+    /**
+     * Abstract method that increments speed depending on amount and model type
+     * @param amount a value between 0 and 1, more increments more
+     */
+    protected abstract void incrementSpeed(double amount);
+
+    /**
+     * Abstract method that decrements speed depending on amount and model type
+     * @param amount a value between 0 and 1, more decrements more
+     */
+    protected abstract void decrementSpeed(double amount);
 
     /**
      * Calls the incrementSpeed() method from the subclass, depending on model name
